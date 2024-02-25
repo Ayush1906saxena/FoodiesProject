@@ -1,8 +1,14 @@
 import { getMeal } from "@/lib/meals";
 import classes from "./page.module.css";
 import Image from "next/image";
+import notFound from "next/navigation";
 export default function MealsDetailPage({ params }) {
   const meal = getMeal(params.slug);
+
+  if (!meal) {
+    // This will display the closest not found or error page.
+    notFound();
+  }
 
   // look for all line change and replace it with html line break tags
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
