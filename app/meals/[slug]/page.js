@@ -3,6 +3,10 @@ import classes from "./page.module.css";
 import Image from "next/image";
 export default function MealsDetailPage({ params }) {
   const meal = getMeal(params.slug);
+
+  // look for all line change and replace it with html line break tags
+  meal.instructions = meal.instructions.replace(/\n/g, "<br />");
+
   return (
     <>
       <header className={classes.header}>
