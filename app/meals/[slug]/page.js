@@ -3,10 +3,13 @@ import classes from "./page.module.css";
 import Image from "next/image";
 import notFound from "next/navigation";
 
-export const metadata = {
-  title: "All meals",
-  description: "Browse the delicious food share by our vibrant community",
-};
+export async function generateMetadata({ params }) {
+  const meal = getMeal(params.slug);
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
 
 export default function MealsDetailPage({ params }) {
   const meal = getMeal(params.slug);
