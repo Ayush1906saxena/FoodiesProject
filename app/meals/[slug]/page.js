@@ -5,6 +5,10 @@ import notFound from "next/navigation";
 
 export async function generateMetadata({ params }) {
   const meal = getMeal(params.slug);
+  if (!meal) {
+    // This will display the closest not found or error page.
+    notFound();
+  }
   return {
     title: meal.title,
     description: meal.summary,
