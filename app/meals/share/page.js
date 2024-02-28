@@ -1,9 +1,12 @@
+"use client";
 import ImagePicker from "@/components/meals/image-picker";
 import classes from "./page.module.css";
 import { shareMeal } from "@/lib/actions";
 import MealsFormSubmit from "@/components/meals/meals-form-submit";
+import { useFormState } from "react-dom";
 
 export default function ShareMealPage() {
+  const [state, formAction] = useFormState(shareMeal, { message: null }); //very different from useFormStatus()
   return (
     <>
       <header className={classes.header}>
@@ -14,7 +17,8 @@ export default function ShareMealPage() {
       </header>
       <main className={classes.main}>
         {/* We are use action instead of onSubmit because onSubmit is a client side function */}
-        <form className={classes.form} action={shareMeal}>
+        {/* We are using formAction and not shareMeal because we want useFormState to step in for us and manage the state */}
+        <form className={classes.form} action={formAction}>
           <div className={classes.row}>
             <p>
               <label htmlFor="name">Your name</label>
@@ -43,6 +47,7 @@ export default function ShareMealPage() {
             ></textarea>
           </p>
           <ImagePicker label="your image" name="image" />
+          {state.message && <p>{state.message}</p>}
           <p className={classes.actions}>
             <MealsFormSubmit />
           </p>
